@@ -61,6 +61,43 @@ const Button = styled.button`
 
 
 const Login = () => {
+  const host = 'http://localhost:6969'
+  const [credentials, setCredentials] = useState({ email: "", password: "" })
+  let navigate = useNavigate();
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+
+    const response = await fetch(`${host}/login`, {
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json',
+
+
+      },
+
+      body: JSON.stringify({ email: credentials.email, password: credentials.password })
+
+
+    })
+    const json = await response.json();
+    console.log(json);
+    if (json.Success) {
+      //Save auth token and redirect 
+      localStorage.setItem('token', json.authtoken);
+      navigate("/")
+    } else {
+      alert("invalid creds")
+    }
+  }
+
+
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
   return (
     <Container>
       <Wrapper>
@@ -68,33 +105,33 @@ const Login = () => {
         <Form>
           <Input placeholder="username" />
           <Input placeholder="password" />
-          <FormControl style={{display : "flex"}}>
-          <FormLabel id="role" style={{fontSize: "25px", fontWeight : "bolder"}}>Your Role</FormLabel>
-          <RadioGroup
-        row
-        aria-labelledby="demo-form-control-label-placement"
-        name="position"
-        defaultValue="top"
-      >
-           <FormControlLabel
-          value="student"
-          control={<Radio />}
-          label="Student"
-          labelPlacement="bottom"
-        />
-           <FormControlLabel
-          value="committee"
-          control={<Radio />}
-          label="Committee"
-          labelPlacement="bottom"
-        />
-           <FormControlLabel
-          value="faculty"
-          control={<Radio />}
-          label="Faculty"
-          labelPlacement="bottom"
-        />
-         </RadioGroup>
+          <FormControl style={{ display: "flex" }}>
+            <FormLabel id="role" style={{ fontSize: "25px", fontWeight: "bolder" }}>Your Role</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-form-control-label-placement"
+              name="position"
+              defaultValue="top"
+            >
+              <FormControlLabel
+                value="student"
+                control={<Radio />}
+                label="Student"
+                labelPlacement="bottom"
+              />
+              <FormControlLabel
+                value="committee"
+                control={<Radio />}
+                label="Committee"
+                labelPlacement="bottom"
+              />
+              <FormControlLabel
+                value="faculty"
+                control={<Radio />}
+                label="Faculty"
+                labelPlacement="bottom"
+              />
+            </RadioGroup>
           </FormControl>
           <Button>LOGIN</Button>
           <Button direction="left">SIGN UP</Button>

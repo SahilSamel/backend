@@ -1,4 +1,5 @@
 const router = express.Router();
+const User = require("../models/users")
 
 router.post('/login', [
     body('email', "enter a valid email").isEmail(),
