@@ -1,14 +1,16 @@
 
-import { Button } from '@mui/material';
+
 import './App.css';
+import FrontPage from './FrontPage';
+import Login from './Login';
+import Navbar from './Navbar';
 
 function App() {
   return (
     <div className="App">
-      This is apps
-      <Button variant="text">Text</Button>
-<Button variant="contained">Contained</Button>
-<Button variant="outlined">Outlined</Button>
+    {/* <Navbar/>
+      <FrontPage/> */}
+      <Login/>
     </div>
   );
 }
